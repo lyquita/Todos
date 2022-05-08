@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import MonthlyView from "../views/MonthlyView.vue";
+import TodoView from "../views/TodoView.vue";
 import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
@@ -6,8 +8,18 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "home",
+      name: "main",
       component: HomeView,
+    },
+    {
+      path: "/monthly-todo",
+      name: "month",
+      component: MonthlyView,
+    },
+    {
+      path: "/todo",
+      name: "todo",
+      component: TodoView,
     },
     {
       path: "/about",
