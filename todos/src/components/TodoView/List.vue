@@ -1,12 +1,23 @@
 <script setup lang="ts">
+import { ref } from "@vue/reactivity";
+
 interface ITodo {
   id: number;
   text: string;
   status: "pending" | "working" | "done";
 }
 
+const props = defineProps(["todos"]);
 
-defineProps(["todos"]);
+function onChecked(e) {
+  const index = parseInt(e.target.value);
+  props.todos.find((x) => x.id === index).status = "done";
+}
+
+function onWorking(e) {
+  const index = parseInt(e);
+  props.todos.find((x) => x.id === index).status = "working";
+}
 </script>
 
 <template>
@@ -24,7 +35,8 @@ defineProps(["todos"]);
               <input
                 :id="todo.id"
                 type="checkbox"
-                value="todo.id"
+                :value="todo.id"
+                @click="onChecked"
                 class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
               <label
@@ -33,21 +45,22 @@ defineProps(["todos"]);
                 >{{ todo.text }}
               </label>
             </div>
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6 inline-block"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="1"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+            <div class="h-6 w-6" @click="onWorking(todo.id)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 inline-block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
           </li>
         </template>
       </ul>
@@ -64,7 +77,8 @@ defineProps(["todos"]);
             <input
               :id="todo.id"
               type="checkbox"
-              value=""
+              :value="todo.id"
+              @click="onChecked"
               class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label
