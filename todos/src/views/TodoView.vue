@@ -26,14 +26,17 @@ const todos = ref([
 const newTodo = ref("");
 
 function addTodo(todo: { value: string; }) {
-
-todos.value.push({
+  todos.value.push({
     id: id++,
     text: todo.value,
     status: "pending",
   });
-
   newTodo.value = "";
+};
+
+function removeTodo(todo){
+  let removeEl = todos.value.findIndex((x)=>x.id == todo.id)
+  todos.value.splice(removeEl,1);
 }
 
 </script>
@@ -45,7 +48,7 @@ todos.value.push({
     <div
       class="w-full bg-[#FDF6F0] flex flex-col items-start p-5 shadow-md rounded-md mt-10"
     >
-      <List :todos="todos" />
+      <List :todos="todos" @removeTodo="removeTodo" />
     </div>
     <AddTodo @addTodo="addTodo" />
   </main>
