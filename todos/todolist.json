@@ -1,0 +1,100 @@
+{
+  "todos": {
+    "date": "2022-05-13",
+    "list": [
+      {
+        "id": 1,
+        "text": "learn vue",
+        "status": "pending"
+      },
+      {
+        "id": 2,
+        "text": "do exercise",
+        "status": "pending"
+      },
+      {
+        "id": 3,
+        "text": "english listening",
+        "status": "pending"
+      },
+      {
+        "id": 4,
+        "text": "gsc app bug fix",
+        "status": "working"
+      },
+      {
+        "id": 5,
+        "text": "rxsj",
+        "status": "done"
+      }
+    ]
+  },
+  "monthly-todo": {
+    "month": "2022-05",
+    "list": [
+      {
+        "date": "2022-05-13",
+        "list": [
+          {
+            "id": 1,
+            "text": "you are my sunshine",
+            "status": "done"
+          },
+          {
+            "id": 2,
+            "text": "gsc app bug fix",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "text": "learn angular",
+            "status": "working"
+          }
+        ]
+      },
+      {
+        "date": "2022-05-14",
+        "list": [
+          {
+            "id": 1,
+            "text": "english listening",
+            "status": "done"
+          },
+          {
+            "id": 2,
+            "text": "gsc app bug fix",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "text": "learn angular",
+            "status": "working"
+          }
+        ]
+      },
+      {
+        "date": "2022-05-15",
+        "list": [
+          {
+            "id": 1,
+            "text": "you are my sunshine",
+            "status": "done"
+          },
+          {
+            "id": 2,
+            "text": "gsc app bug fix",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "text": "learn angular",
+            "status": "working"
+          }
+        ]
+      }
+    ]
+  },
+  "profile": {
+    "name": "typicode"
+  }
+}

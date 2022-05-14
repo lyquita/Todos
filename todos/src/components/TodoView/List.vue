@@ -235,13 +235,29 @@ watchEffect(() => {
             >
               {{ todo.text }}
             </p>
-            <div @click="onRemove(todo)">
+            <div >
               <svg
                 class="w-6 h-6 inline-block"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
+                 @click="onPending(todo.id)"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1"
+                  d="M5 15l7-7 7 7"
+                ></path>
+              </svg>
+              <svg
+                class="w-6 h-6 inline-block"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                 @click="onRemove(todo)"
               >
                 <path
                   stroke-linecap="round"
