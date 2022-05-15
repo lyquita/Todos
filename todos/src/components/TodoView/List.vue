@@ -30,9 +30,6 @@ function onRemove(e) {
   const index = parseInt(e);
   emit("removeTodo", e);
 }
-watchEffect(() => {
-  console.log("watch", props.todos);
-});
 </script>
 
 <template>

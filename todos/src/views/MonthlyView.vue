@@ -3,31 +3,99 @@ import { ref } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
 import axios from "axios";
 import moment from "moment";
-import router
- from "@/router";
-const listData = ref([]);
-const currentMonth = ref(null);
-const currentYear = ref(null);
+import router from "@/router";
+import { getTodolistByMonth } from "@/services/todolist";
 
-axios.get("http://localhost:4000/monthly-todo").then((res) => {
-  currentMonth.value = moment(res.data.month).format("MMMM");
-  currentYear.value = moment(res.data.month).format("YYYY");
-  listData.value = res.data.list;
-});
+interface IIterm {
+  id: number;
+  created_date: Date;
+  username: string;
+  text: string;
+  status: string;
+  month: string;
+  year: string;
+}
+
+const rawData = ref([]);
+const listData = ref([]);
+const currentMonth = ref("");
+const currentYear = ref("");
+const date = new Date();
+
+currentMonth.value = moment(date).format("MM");
+
+getTodolistByMonth(currentMonth.value)
+  .then((res) => {
+    rawData.value = res.data;
+  })
+  .catch((err) => console.log(err));
+
+const computedList = computed(()=>{
+const result = rawData.value.reduce(function (prev, curr) {
+      const key = curr["created_date"];
+      if (!prev[key]) {
+        prev[key] = [];
+      }
+      prev[key].push(curr);
+      return prev;
+    }, [])
+
+    return result
+ 
+
+})
+
+const calculate = computed(()=>{
+  let expectedData = [];
+  let temArr =[];
+  const data = rawData.value
+
+  for(let i=0; i<rawData.value.length; i++){
+    // if(temArr.indexOf(rawData.value[i]['created_date'])=== -1){
+    //   expectedData.push({
+    //     date: rawData.value[i]['created_date']
+    //     data: [rawData.value[i]]
+    //   })
+    // }
+    if(temArr.indexOf(data[i]['created_date']) === -1){
+      expectedData.push({
+        'created_date': data[i]['created_date'],
+        'data': [data[i]]
+      })
+      temArr.push(data[i]['created_date'])
+      console.log('tmp', temArr);
+    }else{
+      for(let j=0; j< expectedData.length; j++){
+        if(expectedData[j]['created_date'] === data[i]['created_date']){
+          expectedData[j].data.push(data[i])
+          break
+        }
+      }
+    }
+ 
+   
+    return expectedData
+    
+  }
+
+})
+
+
+
+
 
 function computedDate(m) {
   return moment(m).format("MMMM DD");
 }
 
-function goBack(){
-    router.back()
+function goBack() {
+  router.back();
 }
-
-
 </script>
 
 <template>
   <main class="flex flex-col w-full items-center">
+    {{calculate}}
     <header class="text-2xl flex w-full justify-between">
       <svg
         xmlns="http://www.w3.org/2000/svg"

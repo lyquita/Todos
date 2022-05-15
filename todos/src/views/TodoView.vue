@@ -1,18 +1,25 @@
 <script setup lang="ts">
 import List from "../components/TodoView/List.vue";
 import AddTodo from "../components/TodoView/Addtodo.vue";
+import { getTodolistByDate } from "@/services/todolist";
 import { ref } from "vue";
 import axios from "axios";
+import moment from "moment";
 import router from "@/router";
 
 const todos = ref([]);
 const length = ref(0);
 const newTodo = ref("");
+const today = ref('')
 
-axios.get("http://localhost:4000/todos").then((res) => {
-  todos.value = res.data.list;
-  length.value = todos.value.length + 1;
-});
+const date = new Date()
+today.value= moment(date).format('yyyy-MM-DD')
+
+
+getTodolistByDate(today.value)
+  .then(res => todos.value = res.data)
+.catch((err => console.log('err', err)))
+
 
 function addTodo(todo: { value: string }) {
   todos.value.push({
