@@ -10,3 +10,10 @@ export async function postLogin(formdata: ILogin): Promise<any> {
 
     return res
 }
+
+
+export async function getUsername(id:number):Promise<any> {
+  const res = await axios.get(`/users/${id}`)
+
+  return res
+}

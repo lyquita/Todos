@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import List from "../components/TodoView/List.vue";
 import AddTodo from "../components/TodoView/Addtodo.vue";
-import { getTodolistByDate } from "@/services/todolist";
+import { getTodolistByDate, postNewTodo } from "@/services/todolist";
 import { ref } from "vue";
 import axios from "axios";
 import moment from "moment";
@@ -11,10 +11,13 @@ const todos = ref([]);
 const length = ref(0);
 const newTodo = ref("");
 const today = ref('')
+const month = ref('');
+const year = ref('')
 
 const date = new Date()
 today.value= moment(date).format('yyyy-MM-DD')
-
+month.value = moment(date).format('MM')
+year.value = moment(date).format('yyyy')
 
 getTodolistByDate(today.value)
   .then(res => todos.value = res.data)
@@ -22,12 +25,22 @@ getTodolistByDate(today.value)
 
 
 function addTodo(todo: { value: string }) {
-  todos.value.push({
-    id: length.value++,
-    text: todo.value,
-    status: "pending",
-  });
-  newTodo.value = "";
+  const params = {
+      username: localStorage.getItem('username'),
+      created_date: today.value,
+      text: todo.value,
+      status: 'pending',
+      month: month.value,
+      year: year.value
+
+  }
+  postNewTodo(params).then(
+    res => {
+      console.log('res', res);
+      newTodo.value = ''
+      
+    }
+  ).catch(err=> console.log(err))
 }
 
 function removeTodo(todo) {

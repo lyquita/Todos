@@ -3,6 +3,7 @@ import router from "@/router";
 import { postLogin } from "../../services/login"
 import { ref } from "@vue/reactivity";
 import { watchEffect } from "@vue/runtime-core";
+import jwt_decode from "jwt-decode";
 
 const username = ref('')
 const password = ref('')
@@ -19,6 +20,8 @@ async function onSubmit() {
         }
     const res = await postLogin(params);
         if(res){
+            const userId = jwt_decode(res.data.access).user_id
+            localStorage.setItem('user_id', userId),
             localStorage.setItem('access_token', res.data.access),
             localStorage.setItem('refresh_token', res.data.refresh)
             router.back()
