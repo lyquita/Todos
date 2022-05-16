@@ -49,33 +49,27 @@ const calculate = computed(()=>{
   let expectedData = [];
   let temArr =[];
   const data = rawData.value
+  
 
-  for(let i=0; i<rawData.value.length; i++){
-    // if(temArr.indexOf(rawData.value[i]['created_date'])=== -1){
-    //   expectedData.push({
-    //     date: rawData.value[i]['created_date']
-    //     data: [rawData.value[i]]
-    //   })
-    // }
+  for(let i=0; i<data.length; i++){
+    
     if(temArr.indexOf(data[i]['created_date']) === -1){
       expectedData.push({
         'created_date': data[i]['created_date'],
         'data': [data[i]]
       })
       temArr.push(data[i]['created_date'])
-      console.log('tmp', temArr);
-    }else{
+    }
+    else{
       for(let j=0; j< expectedData.length; j++){
         if(expectedData[j]['created_date'] === data[i]['created_date']){
           expectedData[j].data.push(data[i])
-          break
         }
       }
+      console.log('ex', expectedData)
+      listData.value = expectedData
     }
- 
    
-    return expectedData
-    
   }
 
 })
@@ -85,7 +79,7 @@ const calculate = computed(()=>{
 
 
 function computedDate(m) {
-  return moment(m).format("MMMM DD");
+  return moment(Date.parse(m)).format("MMMM DD");
 }
 
 function goBack() {
@@ -135,11 +129,11 @@ function goBack() {
       >
         <router-link to="/todo">
           <div class="font-bold mb-3 text-lg">
-            {{ computedDate(item.date) }}
+            {{ computedDate(item.created_date) }}
           </div>
           <ul>
             <li
-              v-for="todo in item.list"
+              v-for="todo in item.data"
               key="todo.id"
               class="text-base tracking-wide leading-5 list-disc mb-1"
             >
