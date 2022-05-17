@@ -137,13 +137,13 @@ function goBack() {
           <div class="font-bold mb-3 text-lg">
             {{ computedDate(item.created_date) }}
           </div>
-          <ul>
+          <ul class="h-44 overflow-hidden">
             <li
               v-for="todo in item.data"
               key="todo.id"
-              class="text-base tracking-wide leading-5 list-disc mb-1"
+              class="tracking-wide leading-5 mb-1 text-sm"
             >
-              {{ todo.text }}
+              🌸 {{ todo.text }}
             </li>
           </ul>
           <div>😁</div>

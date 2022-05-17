@@ -92,13 +92,14 @@ function onRemove(e:any) {
                   text-gray-900
                   dark:text-gray-300
                 "
-                >{{ todo.text }}
+                >
+                <input type="text" :value="todo.text" class="bg-[#FDF6F0]"/>
               </label>
             </div>
             <div class="flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6 inline-block"
+                class="h-6 w-6 inline-block mr-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -181,7 +182,7 @@ function onRemove(e:any) {
             </div>
             <div>
               <svg
-                class="w-6 h-6 inline-block"
+                class="w-6 h-6 inline-block mr-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -247,7 +248,7 @@ function onRemove(e:any) {
             </p>
             <div>
               <svg
-                class="w-6 h-6 inline-block"
+                class="w-6 h-6 inline-block mr-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

@@ -6,16 +6,16 @@ export interface ILogin {
 }
 
 export async function postLogin(formdata: ILogin): Promise<any> {
-    const res = await axios.post('users/token/', formdata)
-
+    const res = await axios.post('users/token/', formdata);
     return res
 }
 
 
 export async function getUsername(id:number):Promise<any> {
-  axios.interceptors.request.use(function(config){
-    if(config.headers.common['Authorization'].slice(7,11) === 'null' ){
-      config.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
+  axios.interceptors.request.use(function (config: any) {
+    if (config.headers.common["Authorization"].slice(7, 11) === "null") {
+      config.headers.common["Authorization"] =
+        "Bearer " + localStorage.getItem("access_token");
     }
     return config
   })
