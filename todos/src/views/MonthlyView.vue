@@ -1,10 +1,16 @@
 <script setup lang="ts">
+//@ts-nocheck
 import { ref } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
 import axios from "axios";
 import moment from "moment";
 import router from "@/router";
 import { getTodolistByMonth } from "@/services/todolist";
+
+interface IMonthIterm{
+  created_date: string,
+  data: IIterm[]
+}
 
 interface IIterm {
   id: number;
@@ -17,7 +23,7 @@ interface IIterm {
 }
 
 const rawData = ref([]);
-const listData = ref([]);
+const listData = ref<IMonthIterm[]>([]);
 const currentMonth = ref("");
 const currentYear = ref("");
 const date = new Date();
@@ -25,7 +31,7 @@ const date = new Date();
 currentMonth.value = moment(date).format("MM");
 
 getTodolistByMonth(currentMonth.value)
-  .then((res) => {
+  .then((res: any) => {
     rawData.value = res.data;
   })
   .catch((err) => console.log(err));
@@ -34,7 +40,8 @@ const computedList = computed(()=>{
 const result = rawData.value.reduce(function (prev, curr) {
       const key = curr["created_date"];
       if (!prev[key]) {
-        prev[key] = [];
+      //@ts-ignore
+      prev[key] = [];
       }
       prev[key].push(curr);
       return prev;
@@ -66,7 +73,6 @@ const calculate = computed(()=>{
           expectedData[j].data.push(data[i])
         }
       }
-      console.log('ex', expectedData)
       listData.value = expectedData
     }
    
@@ -78,7 +84,7 @@ const calculate = computed(()=>{
 
 
 
-function computedDate(m) {
+function computedDate(m:string) {
   return moment(Date.parse(m)).format("MMMM DD");
 }
 
@@ -115,7 +121,7 @@ function goBack() {
     <div class="grid grid-cols-2 gap-3 w-full mt-5">
       <div
         v-for="item in listData"
-        :key="item"
+        :key="item.created_date"
         class="
           w-full
           h-72
@@ -127,7 +133,7 @@ function goBack() {
           rounded-md
         "
       >
-        <router-link to="/todo">
+        <router-link :to="{path:'/todo', query:{'date': item.created_date} }">
           <div class="font-bold mb-3 text-lg">
             {{ computedDate(item.created_date) }}
           </div>

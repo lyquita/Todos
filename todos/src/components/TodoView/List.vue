@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { updateTodo } from "@/services/todolist";
 import { ref } from "@vue/reactivity";
 import { watchEffect } from "@vue/runtime-core";
 
@@ -11,22 +12,34 @@ interface ITodo {
 const props = defineProps(["todos"]);
 const emit = defineEmits(["removeTodo"]);
 
-function onChecked(e) {
+function onChecked(e:any) {
   const index = parseInt(e.target.value);
-  props.todos.find((x) => x.id === index).status = "done";
+  props.todos.find((x:any) => x.id === index).status = "done";
+  const newTodo = props.todos.find((x:any) => x.id === index);
+  updateTodo(index, newTodo)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
 }
 
-function onWorking(e) {
+function onWorking(e:any) {
   const index = parseInt(e);
-  props.todos.find((x) => x.id === index).status = "working";
+  props.todos.find((x:any) => x.id === index).status = "working";
+  const newTodo = props.todos.find((x:any) => x.id === index);
+  updateTodo(index, newTodo)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
 }
 
-function onPending(e) {
+function onPending(e:any) {
   const index = parseInt(e);
-  props.todos.find((x) => x.id === index).status = "pending";
+  props.todos.find((x:any) => x.id === index).status = "pending";
+  const newTodo = props.todos.find((x:any) => x.id === index);
+  updateTodo(index, newTodo)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
 }
 
-function onRemove(e) {
+function onRemove(e:any) {
   const index = parseInt(e);
   emit("removeTodo", e);
 }
@@ -173,7 +186,7 @@ function onRemove(e) {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
-                 @click="onPending(todo.id)"
+                @click="onPending(todo.id)"
               >
                 <path
                   stroke-linecap="round"
@@ -232,14 +245,14 @@ function onRemove(e) {
             >
               {{ todo.text }}
             </p>
-            <div >
+            <div>
               <svg
                 class="w-6 h-6 inline-block"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
-                 @click="onPending(todo.id)"
+                @click="onPending(todo.id)"
               >
                 <path
                   stroke-linecap="round"
@@ -254,7 +267,7 @@ function onRemove(e) {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
-                 @click="onRemove(todo)"
+                @click="onRemove(todo)"
               >
                 <path
                   stroke-linecap="round"

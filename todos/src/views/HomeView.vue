@@ -6,20 +6,24 @@ import { getUsername } from "../services/login";
 
 const username = ref("");
 const isLogin = ref(false);
+const userId = ref(0)
 
 function onLogOut() {
   localStorage.clear();
-  router.push({ path: "/login" });
+  router.push({ name: "login" });
 }
 
 onBeforeMount(() => {
   const tokenExisted = localStorage.getItem("access_token");
-  const user_id = localStorage.getItem("user_id");
+  if(localStorage.getItem("user_id")){
+    //@ts-ignore
+   userId.value = parseInt(localStorage.getItem("user_id"))
+  }
   if (tokenExisted) {
     isLogin.value = true;
   }
 
-  getUsername(user_id)
+  getUsername(userId.value)
     .then((res) => {
       localStorage.setItem("username", res.data.username);
       username.value = res.data.username;
