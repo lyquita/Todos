@@ -63,7 +63,15 @@ function handleChange(e) {
           <li
             v-if="todo.status === 'pending'"
             :key="todo.id"
-            class="text-base tracking-wide leading-5 my-2 flex justify-between hover:bg-slate-200"
+            class="
+              text-base
+              tracking-wide
+              leading-5
+              my-2
+              flex
+              justify-between
+              hover:bg-slate-200
+            "
           >
             <div class="flex items-center">
               <input
@@ -71,11 +79,28 @@ function handleChange(e) {
                 type="checkbox"
                 :value="todo.id"
                 @click="onChecked"
-                class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                class="
+                  w-4
+                  h-4
+                  text-blue-600
+                  bg-gray-100
+                  rounded
+                  border-gray-300
+                  focus:ring-blue-500
+                  dark:focus:ring-blue-600 dark:ring-offset-gray-800
+                  focus:ring-2
+                  dark:bg-gray-700 dark:border-gray-600
+                "
               />
               <label
                 :for="todo.id"
-                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                class="
+                  ml-2
+                  text-sm
+                  font-medium
+                  text-gray-900
+                  dark:text-gray-300
+                "
               >
                 <input
                   type="text"
@@ -129,7 +154,15 @@ function handleChange(e) {
           <li
             v-if="todo.status === 'working'"
             :key="todo.id"
-            class="text-base tracking-wide leading-5 my-2 flex justify-between hover:bg-slate-200"
+            class="
+              text-base
+              tracking-wide
+              leading-5
+              my-2
+              flex
+              justify-between
+              hover:bg-slate-200
+            "
           >
             <div class="flex items-center">
               <input
@@ -137,20 +170,38 @@ function handleChange(e) {
                 type="checkbox"
                 :value="todo.id"
                 @click="onChecked"
-                class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                class="
+                  w-4
+                  h-4
+                  text-blue-600
+                  bg-gray-100
+                  rounded
+                  border-gray-300
+                  focus:ring-blue-500
+                  dark:focus:ring-blue-600 dark:ring-offset-gray-800
+                  focus:ring-2
+                  dark:bg-gray-700 dark:border-gray-600
+                "
               />
               <label
                 :for="todo.id"
-                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >
-                <input
+                class="
+                  ml-2
+                  text-sm
+                  font-medium
+                  text-gray-900
+                  dark:text-gray-300
+                "
+                >
+                    <input
                   type="text"
                   class="bg-[#FDF6F0]"
                   :value="todo.text"
                   @change="handleChange"
                   :id="todo.id"
                 />
-              </label>
+                </label
+              >
             </div>
             <div>
               <svg
@@ -193,20 +244,30 @@ function handleChange(e) {
       <ul>
         <template v-for="todo in todos">
           <li
-            class="text-base tracking-wide leading-5 my-2 hover:bg-slate-200 flex justify-between"
+            class="
+              text-base
+              tracking-wide
+              leading-5
+              my-2
+              hover:bg-slate-200
+              flex
+              justify-between
+            "
             v-if="todo.status === 'done'"
             :key="todo.id"
           >
             <p
-              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 line-through ml-0"
+              class="
+                ml-2
+                text-sm
+                font-medium
+                text-gray-900
+                dark:text-gray-300
+                line-through
+                ml-0
+              "
             >
-              <input
-                type="text"
-                class="bg-[#FDF6F0]"
-                :value="todo.text"
-                @change="handleChange"
-                :id="todo.id"
-              />
+              {{ todo.text }}
             </p>
             <div>
               <svg
