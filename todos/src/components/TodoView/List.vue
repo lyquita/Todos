@@ -12,36 +12,45 @@ interface ITodo {
 const props = defineProps(["todos"]);
 const emit = defineEmits(["removeTodo"]);
 
-function onChecked(e:any) {
+function onChecked(e: any) {
   const index = parseInt(e.target.value);
-  props.todos.find((x:any) => x.id === index).status = "done";
-  const newTodo = props.todos.find((x:any) => x.id === index);
+  props.todos.find((x: any) => x.id === index).status = "done";
+  const newTodo = props.todos.find((x: any) => x.id === index);
   updateTodo(index, newTodo)
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
 }
 
-function onWorking(e:any) {
+function onWorking(e: any) {
   const index = parseInt(e);
-  props.todos.find((x:any) => x.id === index).status = "working";
-  const newTodo = props.todos.find((x:any) => x.id === index);
+  props.todos.find((x: any) => x.id === index).status = "working";
+  const newTodo = props.todos.find((x: any) => x.id === index);
   updateTodo(index, newTodo)
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
 }
 
-function onPending(e:any) {
+function onPending(e: any) {
   const index = parseInt(e);
-  props.todos.find((x:any) => x.id === index).status = "pending";
-  const newTodo = props.todos.find((x:any) => x.id === index);
+  props.todos.find((x: any) => x.id === index).status = "pending";
+  const newTodo = props.todos.find((x: any) => x.id === index);
   updateTodo(index, newTodo)
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
 }
 
-function onRemove(e:any) {
+function onRemove(e: any) {
   const index = parseInt(e);
   emit("removeTodo", e);
+}
+
+function handleChange(e) {
+  const index = parseInt(e.target.id);
+  props.todos.find((x: any) => x.id === index).text = e.target.value;
+  const newTodo = props.todos.find((x: any) => x.id === index);
+  updateTodo(index, newTodo)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
 }
 </script>
 
@@ -54,15 +63,7 @@ function onRemove(e:any) {
           <li
             v-if="todo.status === 'pending'"
             :key="todo.id"
-            class="
-              text-base
-              tracking-wide
-              leading-5
-              my-2
-              flex
-              justify-between
-              hover:bg-slate-200
-            "
+            class="text-base tracking-wide leading-5 my-2 flex justify-between hover:bg-slate-200"
           >
             <div class="flex items-center">
               <input
@@ -70,30 +71,19 @@ function onRemove(e:any) {
                 type="checkbox"
                 :value="todo.id"
                 @click="onChecked"
-                class="
-                  w-4
-                  h-4
-                  text-blue-600
-                  bg-gray-100
-                  rounded
-                  border-gray-300
-                  focus:ring-blue-500
-                  dark:focus:ring-blue-600 dark:ring-offset-gray-800
-                  focus:ring-2
-                  dark:bg-gray-700 dark:border-gray-600
-                "
+                class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
               <label
                 :for="todo.id"
-                class="
-                  ml-2
-                  text-sm
-                  font-medium
-                  text-gray-900
-                  dark:text-gray-300
-                "
-                >
-                <input type="text" :value="todo.text" class="bg-[#FDF6F0]"/>
+                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                <input
+                  type="text"
+                  class="bg-[#FDF6F0]"
+                  :value="todo.text"
+                  @change="handleChange"
+                  :id="todo.id"
+                />
               </label>
             </div>
             <div class="flex items-center">
@@ -139,15 +129,7 @@ function onRemove(e:any) {
           <li
             v-if="todo.status === 'working'"
             :key="todo.id"
-            class="
-              text-base
-              tracking-wide
-              leading-5
-              my-2
-              flex
-              justify-between
-              hover:bg-slate-200
-            "
+            class="text-base tracking-wide leading-5 my-2 flex justify-between hover:bg-slate-200"
           >
             <div class="flex items-center">
               <input
@@ -155,30 +137,20 @@ function onRemove(e:any) {
                 type="checkbox"
                 :value="todo.id"
                 @click="onChecked"
-                class="
-                  w-4
-                  h-4
-                  text-blue-600
-                  bg-gray-100
-                  rounded
-                  border-gray-300
-                  focus:ring-blue-500
-                  dark:focus:ring-blue-600 dark:ring-offset-gray-800
-                  focus:ring-2
-                  dark:bg-gray-700 dark:border-gray-600
-                "
+                class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
               <label
                 :for="todo.id"
-                class="
-                  ml-2
-                  text-sm
-                  font-medium
-                  text-gray-900
-                  dark:text-gray-300
-                "
-                >{{ todo.text }}</label
+                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
+                <input
+                  type="text"
+                  class="bg-[#FDF6F0]"
+                  :value="todo.text"
+                  @change="handleChange"
+                  :id="todo.id"
+                />
+              </label>
             </div>
             <div>
               <svg
@@ -221,30 +193,20 @@ function onRemove(e:any) {
       <ul>
         <template v-for="todo in todos">
           <li
-            class="
-              text-base
-              tracking-wide
-              leading-5
-              my-2
-              hover:bg-slate-200
-              flex
-              justify-between
-            "
+            class="text-base tracking-wide leading-5 my-2 hover:bg-slate-200 flex justify-between"
             v-if="todo.status === 'done'"
             :key="todo.id"
           >
             <p
-              class="
-                ml-2
-                text-sm
-                font-medium
-                text-gray-900
-                dark:text-gray-300
-                line-through
-                ml-0
-              "
+              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 line-through ml-0"
             >
-              {{ todo.text }}
+              <input
+                type="text"
+                class="bg-[#FDF6F0]"
+                :value="todo.text"
+                @change="handleChange"
+                :id="todo.id"
+              />
             </p>
             <div>
               <svg
