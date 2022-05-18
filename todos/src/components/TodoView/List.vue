@@ -44,7 +44,7 @@ function onRemove(e: any) {
   emit("removeTodo", e);
 }
 
-function handleChange(e) {
+function handleChange(e:any) {
   const index = parseInt(e.target.id);
   props.todos.find((x: any) => x.id === index).text = e.target.value;
   const newTodo = props.todos.find((x: any) => x.id === index);

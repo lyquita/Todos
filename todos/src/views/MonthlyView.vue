@@ -40,7 +40,6 @@ const calculate = computed(() => {
   let expectedData = [];
   let temArr = [];
   const data = rawData.value;
-  console.log("chec", data);
 
   for (let i = 0; i < data.length; i++) {
     if (temArr.indexOf(data[i]["created_date"]) === -1) {
