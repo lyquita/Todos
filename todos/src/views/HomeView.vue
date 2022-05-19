@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import router from "@/router";
+import { getTodolistByDate } from "@/services/todolist";
 import { ref } from "@vue/reactivity";
 import { computed, onBeforeMount } from "@vue/runtime-core";
 import moment from "moment";
@@ -9,6 +10,10 @@ const username = ref("");
 const isLogin = ref(false);
 const userId = ref(0);
 const currentTime = ref(0);
+const todoAmount = ref(0);
+const inprogressAmount = ref(0);
+const doneAmount = ref(0);
+const today = ref(moment(new Date()).format("yyyy-MM-DD"));
 
 function onLogOut() {
   localStorage.clear();
@@ -29,6 +34,25 @@ onBeforeMount(() => {
     .then((res) => {
       localStorage.setItem("username", res.data.username);
       username.value = res.data.username;
+    })
+    .catch((err) => console.log(err));
+
+  getTodolistByDate(today.value)
+    .then((res) => {
+      res.data.map((item) => {
+        switch (item.status) {
+          case "pending":
+            todoAmount.value = todoAmount.value + 1;
+            break;
+          case "working":
+            inprogressAmount.value = inprogressAmount.value + 1;
+            break;
+          case "done":
+            doneAmount.value = doneAmount.value + 1;
+          default:
+            break;
+        }
+      });
     })
     .catch((err) => console.log(err));
 });
@@ -78,15 +102,15 @@ const generateGreeting = computed(() => {
         <div class="w-ful bg-[#F8F8F8] p-7 flex rounded-xl">
           <ul class="flex w-full justify-between">
             <li>
-              <p class="font-bold">4</p>
+              <p class="font-bold">{{todoAmount}}</p>
               <p>Todo</p>
             </li>
             <li>
-              <p class="font-bold">2</p>
+              <p class="font-bold">{{inprogressAmount}}</p>
               <p>In Progress</p>
             </li>
             <li>
-              <p class="font-bold">5</p>
+              <p class="font-bold">{{doneAmount}}</p>
               <p>Done</p>
             </li>
           </ul>
