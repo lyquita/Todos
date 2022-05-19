@@ -6,6 +6,16 @@ import { computed, onBeforeMount } from "@vue/runtime-core";
 import moment from "moment";
 import { getUsername } from "../services/login";
 
+interface IIterm {
+  id: number;
+  created_date: Date;
+  username: string;
+  text: string;
+  status: string;
+  month: string;
+  year: string;
+}
+
 const username = ref("");
 const isLogin = ref(false);
 const userId = ref(0);
@@ -39,7 +49,7 @@ onBeforeMount(() => {
 
   getTodolistByDate(today.value)
     .then((res) => {
-      res.data.map((item) => {
+      res.data.map((item:IIterm) => {
         switch (item.status) {
           case "pending":
             todoAmount.value = todoAmount.value + 1;
@@ -49,6 +59,7 @@ onBeforeMount(() => {
             break;
           case "done":
             doneAmount.value = doneAmount.value + 1;
+            break
           default:
             break;
         }
@@ -59,14 +70,16 @@ onBeforeMount(() => {
 
 const generateGreeting = computed(() => {
   const currentHour = moment().format("HH");
-  if (currentHour >= 3 && currentHour < 12) {
+  console.log(currentHour);
+  
+  if (parseInt(currentHour) >= 3 && parseInt(currentHour) < 12) {
     return "Good Morning";
-  } else if (currentHour >= 12 && currentHour < 15) {
+  } else if (parseInt(currentHour) >= 12 && parseInt(currentHour) < 15) {
     return "Good Afternoon";
-  } else if (currentHour >= 15 && currentHour < 20) {
+  } else if (parseInt(currentHour) >= 15 && parseInt(currentHour) < 20) {
     currentTime.value = 1;
     return "Good Evening";
-  } else if (currentHour >= 20 && currentHour < 3) {
+  } else if (parseInt(currentHour) >= 20 && parseInt(currentHour) < 3) {
     currentTime.value = 1;
     return "Good Night";
   } else {
