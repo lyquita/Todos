@@ -3,6 +3,7 @@ import MonthlyView from "../views/MonthlyView.vue";
 import TodoView from "../views/TodoView.vue";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
+import BacklogView from "../views/BacklogView.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -25,8 +26,12 @@ const router = createRouter({
       path: "/login",
       name: 'login',
       component: LoginView,
+    },
+    {
+      path: "/backlog",
+      name: 'backlog',
+      component: BacklogView
     }
-    
   ],
 });
 

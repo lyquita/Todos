@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import router from "@/router";
 import { ref } from "@vue/reactivity";
-import { onBeforeMount } from "@vue/runtime-core";
+import { computed, onBeforeMount } from "@vue/runtime-core";
+import moment from "moment";
 import { getUsername } from "../services/login";
 
 const username = ref("");
 const isLogin = ref(false);
 const userId = ref(0);
+const currentTime = ref(0);
 
 function onLogOut() {
   localStorage.clear();
@@ -30,16 +32,42 @@ onBeforeMount(() => {
     })
     .catch((err) => console.log(err));
 });
+
+const generateGreeting = computed(() => {
+  const currentHour = moment().format("HH");
+  if (currentHour >= 3 && currentHour < 12) {
+    return "Good Morning";
+  } else if (currentHour >= 12 && currentHour < 15) {
+    return "Good Afternoon";
+  } else if (currentHour >= 15 && currentHour < 20) {
+    currentTime.value = 1;
+    return "Good Evening";
+  } else if (currentHour >= 20 && currentHour < 3) {
+    currentTime.value = 1;
+    return "Good Night";
+  } else {
+    return "Hello";
+  }
+});
 </script>
 
 <template>
   <main>
     <div class="flex">
       <div>
-        <h1 class="text-2xl">Good Morning,</h1>
-        <h2 class="text-3xl font-bold">hireoo!</h2>
+        <h1 class="text-2xl">{{ generateGreeting }}</h1>
+        <h2 class="text-3xl font-bold">{{ username }}!</h2>
       </div>
-      <img class="w-28 h-28 ml-5" src="../assets/img/day.svg" />
+      <img
+        class="w-28 h-28 ml-5"
+        src="../assets/img/day.svg"
+        v-if="currentTime === 0"
+      />
+      <img
+        src="../assets/img/moon.svg"
+        class="w-28 h28 ml-5"
+        v-if="currentTime === 1"
+      />
     </div>
     <div>
       <h2 class="text-2xl relative">Today</h2>
@@ -47,22 +75,22 @@ onBeforeMount(() => {
     </div>
     <div class="mt-5">
       <router-link to="/todo">
-      <div class="w-ful bg-[#F8F8F8] p-7 flex rounded-xl">
-        <ul class="flex w-full justify-between">
-          <li>
-            <p class="font-bold">4</p>
-            <p>Todo</p>
-          </li>
-          <li>
-            <p class="font-bold">2</p>
-            <p>In Progress</p>
-          </li>
-          <li>
-            <p class="font-bold">5</p>
-            <p>Done</p>
-          </li>
-        </ul>
-      </div>
+        <div class="w-ful bg-[#F8F8F8] p-7 flex rounded-xl">
+          <ul class="flex w-full justify-between">
+            <li>
+              <p class="font-bold">4</p>
+              <p>Todo</p>
+            </li>
+            <li>
+              <p class="font-bold">2</p>
+              <p>In Progress</p>
+            </li>
+            <li>
+              <p class="font-bold">5</p>
+              <p>Done</p>
+            </li>
+          </ul>
+        </div>
       </router-link>
     </div>
     <div class="mt-5">
@@ -71,12 +99,14 @@ onBeforeMount(() => {
         <img src="../assets/img/emoji4.svg" alt="" class="ml-5" />
       </div>
     </div>
-    <div class="mt-5">
-      <div class="w-ful bg-[#F8F8F8] p-7 rounded-xl">
-        <h2 class="font-bold">Backlog</h2>
-        <p>Redesign the todo list home page</p>
+    <router-link to="/backlog">
+      <div class="mt-5">
+        <div class="w-ful bg-[#F8F8F8] p-7 rounded-xl">
+          <h2 class="font-bold">Backlog</h2>
+          <p>Redesign the todo list home page</p>
+        </div>
       </div>
-    </div>
+    </router-link>
     <div class="fixed bottom-4">
       <button
         v-if="isLogin"
