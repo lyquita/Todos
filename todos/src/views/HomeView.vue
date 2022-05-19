@@ -42,68 +42,81 @@ onBeforeMount(() => {
       <img class="w-28 h-28 ml-5" src="../assets/img/day.svg" />
     </div>
     <div>
-      <router-link to="/todo">
       <h2 class="text-2xl relative">Today</h2>
       <div class="h-3 w-16 bg-[#FBD8D4] absolute top-6 -z-10"></div>
-      <ul class="flex w-full justify-between mt-4">
-        <li>
-          <p class="font-bold">4</p>
-          <p>Todo</p>
-        </li>
-        <li>
-          <p class="font-bold">2</p>
-          <p>In Progress</p>
-        </li>
-        <li>
-          <p class="font-bold">5</p>
-          <p>Done</p>
-        </li>
-      </ul>
-    </router-link>
     </div>
-    <div class="mt-4">
-      <h2 class="text-2xl relative">Record</h2>
-      <div class="h-3 w-16 bg-[#FBD8D4] absolute top-6 -z-10"></div>
-      <ul class="mt-4 flex w-full justify-around">
-        <li>
-          <img src="../assets/img/emoji1.svg" class="h-8 w-8" alt="" />
-        </li>
-        <li>
-          <img src="../assets/img/emoji2.svg" class="h-8 w-8" alt="" />
-        </li>
-        <li>
-          <img src="../assets/img/emoji3.svg" class="h-8 w-8" alt="" />
-        </li>
-        <li>
-          <img src="../assets/img/emoji4.svg" class="h-8 w-8" alt="" />
-        </li>
-      </ul>
-      <button
-        class="inline-flex justify-center p-2 rounded-full mt-5 cursor-pointer bg-[#FCD8D4] dark:text-blue-500 dark:hover:bg-gray-600 items-center"
-      >
-        Add+
-      </button>
+    <div class="mt-5">
+      <router-link to="/todo">
+      <div class="w-ful bg-[#F8F8F8] p-7 flex rounded-xl">
+        <ul class="flex w-full justify-between">
+          <li>
+            <p class="font-bold">4</p>
+            <p>Todo</p>
+          </li>
+          <li>
+            <p class="font-bold">2</p>
+            <p>In Progress</p>
+          </li>
+          <li>
+            <p class="font-bold">5</p>
+            <p>Done</p>
+          </li>
+        </ul>
+      </div>
+      </router-link>
     </div>
-
+    <div class="mt-5">
+      <div class="w-ful bg-[#F8F8F8] p-7 flex rounded-xl">
+        <p>I feel pretty good today</p>
+        <img src="../assets/img/emoji4.svg" alt="" class="ml-5" />
+      </div>
+    </div>
+    <div class="mt-5">
+      <div class="w-ful bg-[#F8F8F8] p-7 rounded-xl">
+        <h2 class="font-bold">Backlog</h2>
+        <p>Redesign the todo list home page</p>
+      </div>
+    </div>
     <div class="fixed bottom-4">
       <button
-       v-if="isLogin"
-      @click="onLogOut"
-        class="inline-flex justify-center p-2 rounded-full mt-5 sticky cursor-pointer bg-[#FCD8D4] dark:text-blue-500 dark:hover:bg-gray-600 items-center"
+        v-if="isLogin"
+        @click="onLogOut"
+        class="
+          inline-flex
+          justify-center
+          p-2
+          rounded-full
+          mt-5
+          sticky
+          cursor-pointer
+          bg-[#FCD8D4]
+          dark:text-blue-500 dark:hover:bg-gray-600
+          items-center
+        "
       >
         Log out
       </button>
     </div>
     <router-link to="/login">
-
-    <div class="fixed bottom-4">
-      <button
-       v-if="!isLogin"
-        class="inline-flex justify-center p-2 rounded-full mt-5 sticky cursor-pointer bg-[#FCD8D4] dark:text-blue-500 dark:hover:bg-gray-600 items-center"
-      >
-        Log in
-      </button>
-    </div>
+      <div class="fixed bottom-4">
+        <button
+          v-if="!isLogin"
+          class="
+            inline-flex
+            justify-center
+            p-2
+            rounded-full
+            mt-5
+            sticky
+            cursor-pointer
+            bg-[#FCD8D4]
+            dark:text-blue-500 dark:hover:bg-gray-600
+            items-center
+          "
+        >
+          Log in
+        </button>
+      </div>
     </router-link>
 
     <!-- <router-link to="/todo">
